@@ -11,10 +11,16 @@ Compile and run the game using TurboC++.
 ## How to Play: 
 
 Press W for up
+
 Press A for left
+
 Press S for down
+
 Press D for right
 
+
 Don't hit the Wall.
+
 Don't eat yourself.
+
 Eat Food and get Bigger :) 
