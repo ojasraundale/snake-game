@@ -1,0 +1,10 @@
+Compile and Run the file using Turbo C++ compiler on windows OS.
+
+Press W for up
+Press A for left
+Press S for down
+Press D for right
+
+Don't hit the Wall.
+Don't eat yourself.
+Eat Food and get Bigger :)

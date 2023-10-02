@@ -1,0 +1,118 @@
+This is a reimplementation of the Classical Game called Snake. This was a course project of Software System Lab by Ojas Raundale and Jay Garchar under the guidance of prof. Ramchandra Phawde, Indian Institute of Technology, Dharwad.
+
+It is a c++ based version.
+You must require TURBO C++ Compiler for it and also Windows OS.
+
+The use of TURBO C++ compiler is only there because of the use of graphics.h for visually showing the snake. The following is the working of the code:
+
+
+Functions Used: 
+
+int UpdateMap(int direction);
+void DrawMap();
+void Initialize();
+bool GenerateFood();
+void DrawBody(int x, int y, int MapType);
+void EndGame();
+void MakeWall();
+
+
+
+User Defined Data Structures:
+
+struct Body
+{
+    int IsHead;
+    Body* next;
+    int velocity;
+    int X;
+    int Y;
+};
+
+struct Snake
+{
+    Body* Head;
+    int SnakeLength;
+};
+
+
+
+Global variables: 
+Snake snk;
+int MaxX, MaxY, BodyRad, BodyCol, HeadCol, FoodCol, MapMaxX, MapMaxY, IsGameOver;
+void *p;
+int Map[100][100];
+
+
+
+Working:
+Snake snk is a single linked list which contains of a head of type body and next elements of also datatype body. 
+Each body element contains an x and y which is basically location of that part in the Map. 
+body.Velocity determines where that element will go at next frame 
+( 0 : right,
+ 1: top,
+ 2: left,
+ 3: down). 
+Next stores the memory address of the next element. 
+Ishead determines whether it is a head or not.
+
+
+The playable screen has 600X600 pixels which can be changed through the Initialize() function be initializing initwindow(600,600). 
+It is divided into a grid of 20X20 position each position having 30X30  pixels. 
+The size of each position can be changed using BodyRad attribute initialized in Initialize(). 
+(2*BodyRad)X(2*BodyRad) = size of each position. Changing BodyRad also changes no of positions.
+
+All these positions are stored in a 2-dimensional array of size MaxX * MaxY.
+The value stored inside Map determines whether at that position, is it a free block or a body part or a head or a wall piece or is food there. 
+If the value is:
+        0 -> Wall
+        1 -> Food
+        2 -> Free
+        3 -> Head
+        4 -> Body
+
+The Colours of each part and initial Map are also initialized in Initialize(). 
+
+MakeWall() is used to make the wall which just sets value in the array to 0 (which represents the wall). 
+The function can be changed at will to change the Wall and put a maze or entirely remove it by making changes in its code. 
+Right now it covers the boundary. 
+By removing it the snake can go through the boundary and appear at the opposite side.
+Initialize() also initializes the Snake and its body attributes along with initial velocity and location. 
+It Spawns with a length of 3 and moving rightward.
+
+
+In Main: 
+Initialize is Called and the game is run untill IsGameOver remains zero.
+Food is also generated whenever the keyboard is hit, the input buffer is checked. 
+If w,a,s,d have been entered, a call is given to UpdateMap with the direction been hit.
+If the keyboard is not hit, the last direction used is given as a parameter to UpdateMap.
+
+UpdateMap is where the snake actually moves. 
+According to the direction, the Snake Structure is updated. 
+If food is encountered, Snake Linked List is increased in size. 
+If Wall, or a part of the body is encountered by the head, IsGameOver becomes 1. 
+Also the Map[][] Array is updated according to the new snake location. 
+If food was eaten, 1 is returned and if 1 is returned, new food is generated in Main.
+
+Now a call is given to DrawMap(). 
+As the name suggests it draws the Map. 
+At first it clears the screen. 
+But if the Map is drawn pixel by pixel then it takes a long time, decreasing the frame rate. 
+Thats why all the parts required for the Snake is first printed below the boundary and directly picked up from there 
+and printed wherever they are supposed to be printed using getimage and putimage function included in graphics.h 
+
+Food is generated at random spots which are not preoccupied using GenerateFood() function. 
+
+
+
+Also a delay of 100 ms is given before refreshing each frame. 
+But, the fps is clearly smaller than 10 as printing the Map takes quite longer.
+So The player might experience flickering because of refreshing the page and reprinting it.
+
+
+
+The only reason why its only windows compatible is because of graphics. 
+It can be made compatible with other OS if a library which is compatible with other OS is used.
+A simple change which can be done is using cout or printf for differnt graphical structures.
+Only the DrawMap() and DrawBody() are needed to be changed in such case.
+ 

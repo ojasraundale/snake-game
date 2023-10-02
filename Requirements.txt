@@ -1,0 +1,5 @@
+Windows OS
+
+functional graphics.h library
+
+Turbo C++ Compiler.
